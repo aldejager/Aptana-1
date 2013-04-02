@@ -1,38 +1,39 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-</head>
-<body>
-  <form action="/" id="searchForm">
-   <input type="text" name="s" placeholder="Search..." />
-   <input type="submit" value="Search" />
-  </form>
-  <!-- the result of the search will be rendered inside this div -->
-  <div id="result">
- 
-<script>
-/* attach a submit handler to the form */
-$("#searchForm").submit(function(event) {
- 
-  /* stop form from submitting normally */
-  event.preventDefault();
- 
-  /* get some values from elements on the page: */
-  var $form = $( this ),
-      term = $form.find( 'input[name="s"]' ).val(),
-      url = $form.attr( 'action' );
- 
-  /* Send the data using post */
-  var posting = $.post( url, { s: term } );
- 
-  /* Put the results in a div */
-  posting.done(function( data ) {
-    var content = $( data ).find( '#content' );
-    $( "#result" ).empty().append( content );
-  });
-});
-</script>
- 
-</body>
+  <head>
+    <title>navigator.connection.type Example</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-2.5.0.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // Wait for Cordova to load
+    // 
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // Cordova is loaded and it is now safe to make calls Cordova methods
+    //
+    function onDeviceReady() {
+        checkConnection();
+    }
+
+    function checkConnection() {
+        var networkState = navigator.connection.type;
+
+        var states = {};
+        states[Connection.UNKNOWN]  = 'Unknown connection';
+        states[Connection.ETHERNET] = 'Ethernet connection';
+        states[Connection.WIFI]     = 'WiFi connection';
+        states[Connection.CELL_2G]  = 'Cell 2G connection';
+        states[Connection.CELL_3G]  = 'Cell 3G connection';
+        states[Connection.CELL_4G]  = 'Cell 4G connection';
+        states[Connection.NONE]     = 'No network connection';
+
+        alert('Connection type: ' + states[networkState]);
+    }
+
+    </script>
+  </head>
+  <body>
+    <p>A dialog box will report the network state.</p>
+  </body>
 </html>
